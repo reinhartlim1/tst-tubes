@@ -25,7 +25,7 @@ async def recipe_recommendation_based_on_product(product_id: int, token: str = D
         vectors = vectorizer.fit_transform(all_names)
         similarity_matrix = cosine_similarity(vectors)
         product_index = 0
-        similar_recipes_indices = similarity_matrix[product_index].argsort()[-5:-2][::-1]
+        similar_recipes_indices = similarity_matrix[product_index].argsort()[-4:-1][::-1]-1
         recipe_recommendation = [recipe_response[index] for index in similar_recipes_indices]
     else:
         print("Invalid response format.")
