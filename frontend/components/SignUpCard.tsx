@@ -5,7 +5,6 @@ import {
   FormLabel,
   Input,
   InputGroup,
-  HStack,
   InputRightElement,
   Stack,
   Button,
@@ -13,6 +12,7 @@ import {
   Text,
   useColorModeValue,
   Link,
+  useToast
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
@@ -25,6 +25,7 @@ export default function SignupCard() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const toast = useToast();
 
   const handleSignUp = async () => {
     try {
@@ -43,7 +44,15 @@ export default function SignupCard() {
       );
       await handleLogin();
     } catch (error) {
-      console.error("Login failed:", error);
+      console.error("Sign up failed:", error);
+      toast({
+        title: "Sign Up failed",
+        description: "Check your input",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        position: "top"
+    })
     }
   };
 
@@ -61,11 +70,27 @@ export default function SignupCard() {
           },
         }
       );
+      toast({
+        title: "Login success",
+        description: "Welcome back",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+        position: "top"
+      })
       localStorage.setItem("token", response.data.access_token);
       localStorage.setItem("token_type", response.data.token_type);
       router.push("/");
     } catch (error) {
       console.error("Login failed:", error);
+      toast({
+        title: "Login failed",
+        description: "Please check your email and password",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        position: "top"
+    })
     }
   };
 

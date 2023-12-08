@@ -5,12 +5,6 @@ import {
   IconButton,
   Button,
   Stack,
-  Collapse,
-  Icon,
-  Link,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
@@ -18,8 +12,6 @@ import {
 import {
   HamburgerIcon,
   CloseIcon,
-  ChevronDownIcon,
-  ChevronRightIcon,
 } from "@chakra-ui/icons"
 
 export default function WithSubnavigation() {

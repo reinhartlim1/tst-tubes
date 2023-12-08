@@ -4,23 +4,33 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Checkbox,
   Stack,
   Link,
   Button,
   Heading,
   Text,
   useColorModeValue,
+  useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import http from "../app/axios";
 import { useRouter } from "next/navigation";
 
 export default function SimpleCard() {
-    const router = useRouter();
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const toast = useToast();
+  const showToast = () => {
+    toast({
+      title: "Login failed",
+      description: "Please check your email and password",
+      status: "error",
+      duration: 9000,
+      isClosable: true,
+      position: "top",
+    });
+  };
   const handleLogin = async () => {
     try {
       const response = await http.post(
@@ -37,10 +47,18 @@ export default function SimpleCard() {
       );
       localStorage.setItem("token", response.data.access_token);
       localStorage.setItem("token_type", response.data.token_type);
-      router.push("/");
-
+      toast({
+        title: "Login success",
+        description: "Welcome back",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+        position: "top",
+      });
+      router.push("/dashboard");
     } catch (error) {
       console.error("Login failed:", error);
+      showToast();
     }
   };
 
